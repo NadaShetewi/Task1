@@ -23,8 +23,8 @@ public class ECommerceSystem {
         List<Shippable> itemsToShip = new ArrayList<>();
 
         for (CartItem item : cart.getItems()) {
-            Product product = item.product;
-            int qty = item.quantity;
+            Product product = item.getProduct();
+            int qty = item.getQuantity();
 
             if (!product.isAvailable(qty)) {
                 throw new IllegalStateException("Product out of stock or expired: " + product.getName());
@@ -37,7 +37,7 @@ public class ECommerceSystem {
             }
         }
 
-        double shippingFees = itemsToShip.stream().mapToDouble(Shippable::getWeight).sum() * 2.5;
+        double shippingFees = itemsToShip.stream().mapToDouble(Shippable::getWeight).sum() * 2.5;//kilo price is 2.5
         double total = subtotal + shippingFees;
 
         if (customer.getBalance() < total) {
@@ -45,12 +45,12 @@ public class ECommerceSystem {
         }
 
         for (CartItem item : cart.getItems()) {
-            item.product.reduceQuantity(item.quantity);
+            item.getProduct().reduceQuantity(item.getQuantity());
         }
 
         customer.deduct(total);
 
-        // Summary
+        
         System.out.printf("Subtotal: $%.2f%n", subtotal);
         System.out.printf("Shipping: $%.2f%n", shippingFees);
         System.out.printf("Total Paid: $%.2f%n", total);

@@ -2,9 +2,9 @@ package Product;
 import java.time.LocalDate;
 
 public abstract class Product {
-    protected String name;
-    protected double price;
-    protected int quantity;
+    private String name;
+    private double price;
+    private int quantity;
 
     public Product(String name, double price, int quantity) {
         this.name = name;
